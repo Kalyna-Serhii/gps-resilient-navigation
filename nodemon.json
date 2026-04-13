@@ -1,0 +1,15 @@
+{
+  "watch": ["src", "scripts"],
+  "ext": "js,json",
+  "ignore": [
+    "node_modules",
+    "logs",
+    "public",
+    "tmp",
+    ".git"
+  ],
+  "exec": "node src/index.js",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
