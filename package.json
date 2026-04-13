@@ -11,10 +11,12 @@
   },
   "private": true,
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.4.1",
     "pino": "^10.3.1",
     "pino-pretty": "^13.1.3",

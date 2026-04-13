@@ -2,7 +2,7 @@ import express from 'express';
 import logger from './utils/logger.js';
 import cors from 'cors';
 import { errorHandler } from './utils/errorHandler.js';
-import {} from './routes/index.js';
+import { authRouter, userRouter } from './routes/index.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './docs/openapi.js';
 import basicAuth from './middlewares/basicAuth.js';
@@ -95,6 +95,8 @@ app.use(express.json());
 // Static files
 
 // Routes
+app.use('/api/auth', authRouter);
+app.use('/api/users', userRouter);
 
 // Health
 app.use('/health', (req, res) => res.status(200).json({ status: 'ok' }));
