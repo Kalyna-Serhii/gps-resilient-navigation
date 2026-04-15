@@ -11,7 +11,7 @@ const requiredVars = ['BASE_URL', 'PORT', 'SWAGGER_USER', 'SWAGGER_PASSWORD', 'M
 
 for (const v of requiredVars) {
   if (!process.env[v]) {
-    console.error(`❌ Required environment variable is missing: ${v}`);
+    console.error(`Required environment variable is missing: ${v}`);
     process.exit(1);
   }
 }
