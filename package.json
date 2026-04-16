@@ -7,15 +7,18 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "cross-env NODE_ENV=development nodemon --config nodemon.json",
-    "lint": "eslint ./src --cache"
+    "lint": "eslint ./src --fix"
   },
   "private": true,
   "dependencies": {
+    "@turf/boolean-point-in-polygon": "^7.3.4",
+    "@turf/helpers": "^7.3.4",
     "axios": "^1.15.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^2.2.2",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.4.1",

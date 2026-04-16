@@ -1,11 +1,15 @@
-import UserModel from '../models/userModel.js';
 import bcrypt from 'bcrypt';
-import { AppError, BadRequestError, ConflictError, InternalServerError, NotFoundError, UnauthorizedError } from '../utils/httpErrors.js';
-import { errors } from '../utils/appErrors.js';
+
 import UserDto from '../dtos/userDto.js';
-import tokenService from './tokenService.js';
+
+import UserModel from '../models/userModel.js';
+
+import { errors } from '../utils/appErrors.js';
 import { SALT_ROUNDS } from '../utils/constants.js';
 import { getToken } from '../utils/getToken.js';
+import { AppError, BadRequestError, ConflictError, InternalServerError, NotFoundError, UnauthorizedError } from '../utils/httpErrors.js';
+
+import tokenService from './tokenService.js';
 
 const AuthService = {
   async register(req) {

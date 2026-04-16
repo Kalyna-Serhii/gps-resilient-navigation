@@ -1,7 +1,8 @@
 import config from '../config/index.js';
-import { UnauthorizedError, ForbiddenError, InternalServerError } from '../utils/httpErrors.js';
-import logger from '../utils/logger.js';
+
 import { errors } from '../utils/appErrors.js';
+import { ForbiddenError, InternalServerError,UnauthorizedError } from '../utils/httpErrors.js';
+import logger from '../utils/logger.js';
 
 export default function basicAuth(req, res, next) {
   const auth = req.headers['authorization'];

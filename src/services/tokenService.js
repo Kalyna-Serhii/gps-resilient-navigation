@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
-import TokenModel from '../models/tokenModel.js';
+
 import config from '../config/index.js';
+
+import TokenModel from '../models/tokenModel.js';
 
 const TokenService = {
   generateTokens(payload) {

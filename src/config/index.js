@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
-const requiredVars = ['BASE_URL', 'PORT', 'SWAGGER_USER', 'SWAGGER_PASSWORD', 'MONGODB_URI', 'JWT_ACCESS_SECRET', 'JWT_REFRESH_SECRET', 'JWT_ACCESS_TTL', 'JWT_REFRESH_TTL'];
+const requiredVars = ['BASE_URL', 'PORT', 'SWAGGER_USER', 'SWAGGER_PASSWORD', 'MONGODB_URI', 'JWT_ACCESS_SECRET', 'JWT_REFRESH_SECRET', 'JWT_ACCESS_TTL', 'JWT_REFRESH_TTL', 'ALERTS_API_TOKEN'];
 
 for (const v of requiredVars) {
   if (!process.env[v]) {
@@ -28,4 +28,5 @@ export default {
     accessTtl: process.env.JWT_ACCESS_TTL,
     refreshTtl: process.env.JWT_REFRESH_TTL,
   },
+  alertsApiToken: process.env.ALERTS_API_TOKEN,
 };

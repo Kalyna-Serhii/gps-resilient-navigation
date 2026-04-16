@@ -1,11 +1,12 @@
-import express from 'express';
-import logger from './utils/logger.js';
 import cors from 'cors';
-import { errorHandler } from './utils/errorHandler.js';
-import { authRouter, userRouter, routeRouter, geocodeRouter } from './routes/index.js';
+import express from 'express';
 import swaggerUi from 'swagger-ui-express';
+
 import swaggerSpec from './docs/openapi.js';
 import basicAuth from './middlewares/basicAuth.js';
+import { alertRouter, authRouter, geocodeRouter, routeRouter, userRouter } from './routes/index.js';
+import { errorHandler } from './utils/errorHandler.js';
+import logger from './utils/logger.js';
 
 const app = express();
 
@@ -99,6 +100,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/routes', routeRouter);
 app.use('/api/geocode', geocodeRouter);
+app.use('/api/alerts', alertRouter);
 
 // Health
 app.use('/health', (req, res) => res.status(200).json({ status: 'ok' }));

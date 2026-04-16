@@ -1,6 +1,7 @@
-import { AppError, InternalServerError, NotFoundError } from '../utils/httpErrors.js';
 import UserModel from '../models/userModel.js';
+
 import { errors } from '../utils/appErrors.js';
+import { AppError, InternalServerError, NotFoundError } from '../utils/httpErrors.js';
 
 const UserService = {
   async getUser(req) {

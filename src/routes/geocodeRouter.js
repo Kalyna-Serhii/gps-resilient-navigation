@@ -1,6 +1,8 @@
 import express from 'express';
-import geocodeController from '../controllers/geocodeController.js';
+
 import authMiddleware from '../middlewares/authMiddleware.js';
+
+import geocodeController from '../controllers/geocodeController.js';
 
 const router = express.Router();
 

@@ -1,7 +1,9 @@
-import tokenService from '../services/tokenService.js';
-import { UnauthorizedError } from '../utils/httpErrors.js';
-import { getToken } from '../utils/getToken.js';
 import { Types } from 'mongoose';
+
+import tokenService from '../services/tokenService.js';
+
+import { getToken } from '../utils/getToken.js';
+import { UnauthorizedError } from '../utils/httpErrors.js';
 
 function authorizationCheck(req) {
   try {

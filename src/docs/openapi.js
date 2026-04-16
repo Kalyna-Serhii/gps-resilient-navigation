@@ -1,4 +1,5 @@
 import config from '../config/index.js';
+
 import paths from './paths/index.js';
 import components from './schemas/index.js';
 

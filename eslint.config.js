@@ -1,6 +1,7 @@
 import js from '@eslint/js';
-import globals from 'globals';
 import { defineConfig } from 'eslint/config';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
 
 export default defineConfig([
   js.configs.recommended,
@@ -15,9 +16,43 @@ export default defineConfig([
         ...globals.jest,
       },
     },
+
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
+
     rules: {
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       'no-undef': 'warn',
+
+      'simple-import-sort/imports': [
+        'warn',
+        {
+          groups: [
+            ['^node:', '^@?\\w'],
+
+            ['\\.\\./config'],
+
+            ['\\.\\./dtos'],
+            ['\\.\\./models'],
+            ['\\.\\./services'],
+
+            ['\\.\\./middlewares'],
+            ['\\.\\./routes'],
+            ['\\.\\./controllers'],
+
+            ['\\.\\./utils'],
+
+            ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+
+            ['^\\./'],
+
+            ['^\\u0000'],
+          ],
+        },
+      ],
+
+      'simple-import-sort/exports': 'warn',
     },
     ignores: ['node_modules/', 'logs/', 'dist/', 'coverage/'],
   },

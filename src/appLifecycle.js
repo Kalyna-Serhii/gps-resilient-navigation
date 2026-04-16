@@ -1,15 +1,17 @@
 import mongoose from 'mongoose';
+
 import app from './app.js';
-import config from './config/index.js';
-import logger from './utils/logger.js';
 import connectDB from './config/database.js';
-import { InternalServerError, AppError } from './utils/httpErrors.js';
+import config from './config/index.js';
+import { startAlertPolling, stopAlertPolling } from './services/alertCache.js';
 import { errors } from './utils/appErrors.js';
+import { AppError,InternalServerError } from './utils/httpErrors.js';
+import logger from './utils/logger.js';
 
 let server = null;
 let signalsBound = false;
 let boundHandlers = [];
-let stopping = false; // guard to prevent double shutdown
+let stopping = false;
 
 export async function start() {
   if (server) {
@@ -20,6 +22,8 @@ export async function start() {
     await connectDB();
     logger.info('Successfully connected to MongoDB');
 
+    await startAlertPolling();
+
     const port = config.port || 8080;
     server = app.listen(port, () => {
       logger.info(`Server running on port ${port}`);
@@ -28,17 +32,15 @@ export async function start() {
 
     if (!signalsBound) {
       const graceful = async signal => {
-        logger.warn(`Отримано сигнал ${signal}, починаємо процес завершення роботи...`);
+        logger.warn(`Received signal ${signal}, starting graceful shutdown...`);
         await stop({ exit: true });
       };
       boundHandlers = [
         ['SIGTERM', () => graceful('SIGTERM')],
         ['SIGINT', () => graceful('SIGINT')],
       ];
-      // Bind OS signals once
       for (const [sig, handler] of boundHandlers) process.on(sig, handler);
 
-      // Bind fatal error handlers once
       process.once('unhandledRejection', reason => {
         logger.error({ reason }, 'Unhandled Promise Rejection');
         void stop({ exit: true });
@@ -72,6 +74,8 @@ export async function stop({ exit = false } = {}) {
       server = null;
     }
 
+    stopAlertPolling();
+
     if (mongoose.connection.readyState !== 0) {
       await mongoose.connection.close(false);
       logger.info('MongoDB connection closed');
@@ -84,15 +88,10 @@ export async function stop({ exit = false } = {}) {
     }
 
     if (exit) process.exit(0);
-    // if not exiting process, allow future stops
     stopping = false;
   } catch (error) {
     logger.error(`Error stopping server: ${error.message}`);
     if (exit) process.exit(1);
     stopping = false;
   }
-}
-
-export function getServer() {
-  return server;
 }

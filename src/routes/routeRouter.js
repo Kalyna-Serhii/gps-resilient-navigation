@@ -1,6 +1,8 @@
 import express from 'express';
-import routeController from '../controllers/routeController.js';
+
 import authMiddleware from '../middlewares/authMiddleware.js';
+
+import routeController from '../controllers/routeController.js';
 
 const router = express.Router();
 

@@ -76,12 +76,12 @@ class ProviderAPIFailure extends ProviderError {
 export {
   AppError,
   BadRequestError,
-  UnauthorizedError,
-  PaymentRequiredError,
-  ForbiddenError,
-  NotFoundError,
   ConflictError,
-  TooManyRequestsError,
+  ForbiddenError,
   InternalServerError,
+  NotFoundError,
+  PaymentRequiredError,
   ProviderAPIFailure,
+  TooManyRequestsError,
+  UnauthorizedError,
 };

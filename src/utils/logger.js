@@ -1,4 +1,5 @@
 import pino from 'pino';
+
 import config from '../config/index.js';
 
 const level = config.nodeEnv === 'test' ? 'silent' : 'info';
