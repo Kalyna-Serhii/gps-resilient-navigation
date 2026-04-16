@@ -6,6 +6,7 @@ import routeController from '../controllers/routeController.js';
 
 const router = express.Router();
 
-router.get('/', authMiddleware.onlyAuthorized, routeController.getRoute);
+router.get('/', authMiddleware.onlyAuthorized, routeController.getRoutes);
+router.post('/', authMiddleware.onlyAuthorized, routeController.createRoute);
 
 export default router;

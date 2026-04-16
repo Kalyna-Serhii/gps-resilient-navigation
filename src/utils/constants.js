@@ -1,5 +1,7 @@
 export const SALT_ROUNDS = 10;
 
+export const MAX_SAVED_ROUTES = 10;
+
 export const POLL_INTERVAL_MS = 60000;
 
 export const HASC_TO_NAME = {

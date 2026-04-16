@@ -1,3 +1,4 @@
+import alerts from './alerts.js';
 import auth from './auth.js';
 import geocode from './geocode.js';
 import routes from './routes.js';
@@ -8,6 +9,7 @@ const paths = {
   ...users,
   ...routes,
   ...geocode,
+  ...alerts,
 };
 
 export default paths;
