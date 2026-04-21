@@ -11,11 +11,11 @@ import { AppError, BadRequestError, InternalServerError, NotFoundError } from '.
 import { getCache } from './alertCache.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ukraineOblasts = JSON.parse(readFileSync(path.join(__dirname, '../data/ukraine-oblasts.geojson'), 'utf-8'));
+const ukraineRegions = JSON.parse(readFileSync(path.join(__dirname, '../data/ukraine-regions.geojson'), 'utf-8'));
 
-const validFeatures = ukraineOblasts.features.filter(f => f.properties.GID_1 !== '?' && HASC_TO_NAME[f.properties.HASC_1]);
+const validFeatures = ukraineRegions.features.filter(f => f.properties.GID_1 !== '?' && HASC_TO_NAME[f.properties.HASC_1]);
 
-function findOblastByCoords(lat, lng) {
+function findRegionByCoords(lat, lng) {
   const pt = point([lng, lat]);
   const feature = validFeatures.find(f => booleanPointInPolygon(pt, f));
   return feature ? HASC_TO_NAME[feature.properties.HASC_1] : null;
@@ -23,8 +23,8 @@ function findOblastByCoords(lat, lng) {
 
 const AlertService = {
   getActiveAlerts() {
-    const oblasts = [...getCache().keys()];
-    return { activeOblasts: oblasts, activeCount: oblasts.length };
+    const regions = [...getCache().keys()];
+    return { activeRegions: regions, activeCount: regions.length };
   },
 
   getStatusByLocation(req) {
@@ -42,15 +42,15 @@ const AlertService = {
         throw new BadRequestError('lat and lng must be valid numbers');
       }
 
-      const detectedOblast = findOblastByCoords(parsedLat, parsedLng);
-      if (!detectedOblast) {
+      const detectedRegion = findRegionByCoords(parsedLat, parsedLng);
+      if (!detectedRegion) {
         throw new NotFoundError('Coordinates are outside Ukrainian territory');
       }
 
-      const alertIsActive = getCache().has(detectedOblast);
+      const alertIsActive = getCache().has(detectedRegion);
 
       return {
-        detectedOblast,
+        detectedRegion,
         alertIsActive,
       };
     } catch (error) {

@@ -27,7 +27,7 @@ async function fetchAndUpdate() {
     }
 
     cache = next;
-    logger.info(`Alert cache updated: ${cache.size} active oblast alert(s)`);
+    logger.info(`Alert cache updated: ${cache.size} active region alert(s)`);
   } catch (err) {
     logger.error({ err }, 'Failed to update alert cache');
   }

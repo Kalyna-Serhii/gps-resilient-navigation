@@ -63,7 +63,6 @@ const RouteService = {
     }
 
     const route = await RouteModel.create({ userId, name, origin, destination, routes });
-    console.log(route);
 
     return route;
   },

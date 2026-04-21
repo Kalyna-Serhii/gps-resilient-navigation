@@ -2,7 +2,7 @@ const alerts = {
   '/api/alerts': {
     get: {
       tags: ['Alerts'],
-      summary: 'Get all currently active air alert oblasts',
+      summary: 'Get all currently active air alert regions',
       responses: {
         200: {
           description: 'List of active alerts',
@@ -11,7 +11,7 @@ const alerts = {
               schema: {
                 type: 'object',
                 properties: {
-                  activeOblasts: {
+                  activeRegions: {
                     type: 'array',
                     items: { type: 'string' },
                     example: ['Київська область', 'Харківська область'],
@@ -30,20 +30,20 @@ const alerts = {
   '/api/alerts/by-location': {
     get: {
       tags: ['Alerts'],
-      summary: 'Check alert status for the user\'s current location',
+      summary: "Check alert status for the user's current location",
       parameters: [
         { name: 'lat', in: 'query', required: true, schema: { type: 'number' }, description: 'Latitude' },
         { name: 'lng', in: 'query', required: true, schema: { type: 'number' }, description: 'Longitude' },
       ],
       responses: {
         200: {
-          description: 'Alert status for the detected oblast',
+          description: 'Alert status for the detected region',
           content: {
             'application/json': {
               schema: {
                 type: 'object',
                 properties: {
-                  detectedOblast: { type: 'string', example: 'Київська область' },
+                  detectedRegion: { type: 'string', example: 'Київська область' },
                   alertIsActive: { type: 'boolean', example: true },
                 },
               },
