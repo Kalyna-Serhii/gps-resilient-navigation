@@ -27,44 +27,6 @@ const routes = {
                     name: { type: 'string' },
                     origin: coordinateSchema,
                     destination: coordinateSchema,
-                    routes: {
-                      type: 'array',
-                      items: {
-                        type: 'object',
-                        properties: {
-                          distance: { type: 'number' },
-                          duration: { type: 'number' },
-                          geometry: {
-                            type: 'object',
-                            description: 'GeoJSON LineString geometry',
-                            properties: {
-                              type: { type: 'string', example: 'LineString' },
-                              coordinates: { type: 'array', items: { type: 'array', items: { type: 'number' } } },
-                            },
-                          },
-                          steps: {
-                            type: 'array',
-                            items: {
-                              type: 'object',
-                              properties: {
-                                instruction: { type: 'string' },
-                                name: { type: 'string' },
-                                distance: { type: 'number' },
-                                duration: { type: 'number' },
-                                maneuver: {
-                                  type: 'object',
-                                  properties: {
-                                    type: { type: 'string' },
-                                    modifier: { type: 'string', nullable: true },
-                                    location: { type: 'array', items: { type: 'number' } },
-                                  },
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
                     createdAt: { type: 'string', format: 'date-time' },
                     updatedAt: { type: 'string', format: 'date-time' },
                   },
@@ -160,6 +122,71 @@ const routes = {
     },
   },
   '/api/routes/{id}': {
+    get: {
+      tags: ['Routes'],
+      summary: 'Get route by id',
+      responses: {
+        200: {
+          description: 'List of saved routes',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  _id: { type: 'string' },
+                  userId: { type: 'string' },
+                  name: { type: 'string' },
+                  origin: coordinateSchema,
+                  destination: coordinateSchema,
+                  routes: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        distance: { type: 'number' },
+                        duration: { type: 'number' },
+                        geometry: {
+                          type: 'object',
+                          description: 'GeoJSON LineString geometry',
+                          properties: {
+                            type: { type: 'string', example: 'LineString' },
+                            coordinates: { type: 'array', items: { type: 'array', items: { type: 'number' } } },
+                          },
+                        },
+                        steps: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              instruction: { type: 'string' },
+                              name: { type: 'string' },
+                              distance: { type: 'number' },
+                              duration: { type: 'number' },
+                              maneuver: {
+                                type: 'object',
+                                properties: {
+                                  type: { type: 'string' },
+                                  modifier: { type: 'string', nullable: true },
+                                  location: { type: 'array', items: { type: 'number' } },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                  createdAt: { type: 'string', format: 'date-time' },
+                  updatedAt: { type: 'string', format: 'date-time' },
+                },
+              },
+            },
+          },
+        },
+        401: { description: 'Unauthorized' },
+        500: { description: 'Internal error' },
+      },
+    },
     delete: {
       tags: ['Routes'],
       summary: 'Delete route by id',

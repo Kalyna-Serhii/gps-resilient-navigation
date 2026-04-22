@@ -12,9 +12,33 @@ const OSRM_BASE_URL = 'https://router.project-osrm.org';
 const RouteService = {
   async getRoutes(req) {
     try {
-      const routes = await RouteModel.find({ userId: req.userId }).sort({ createdAt: -1 }).lean();
+      const { userId } = req;
+
+      const routes = await RouteModel.find({ userId }).select('-routes').sort({ createdAt: -1 }).lean();
 
       return routes;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      throw new InternalServerError(`${errors.INTERNAL_ERROR}: ${error.message}`, error);
+    }
+  },
+
+  async getRouteById(req) {
+    try {
+      const { id } = req.params;
+      const { userId } = req;
+
+      const route = await RouteModel.findById(id).lean();
+
+      if (!route) {
+        throw new NotFoundError(`Route with ${id} id not found`);
+      }
+
+      if (!route.userId.equals(userId)) {
+        throw new ForbiddenError('You can not get this route');
+      }
+
+      return route;
     } catch (error) {
       if (error instanceof AppError) throw error;
       throw new InternalServerError(`${errors.INTERNAL_ERROR}: ${error.message}`, error);

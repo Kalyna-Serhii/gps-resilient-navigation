@@ -10,6 +10,15 @@ const RouteController = {
       next(error);
     }
   },
+  async getRouteById(req, res, next) {
+    try {
+      const response = await routeService.getRouteById(req);
+
+      return res.status(200).json(response);
+    } catch (error) {
+      next(error);
+    }
+  },
   async createRoute(req, res, next) {
     try {
       const response = await routeService.createRoute(req);
