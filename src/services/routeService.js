@@ -5,7 +5,7 @@ import RouteModel from '../models/routeModel.js';
 import { errors } from '../utils/appErrors.js';
 import { MAX_SAVED_ROUTES } from '../utils/constants.js';
 import { formatRoute } from '../utils/formatRoute.js';
-import { AppError, BadRequestError, InternalServerError } from '../utils/httpErrors.js';
+import { AppError, BadRequestError, ForbiddenError, InternalServerError, NotFoundError } from '../utils/httpErrors.js';
 
 const OSRM_BASE_URL = 'https://router.project-osrm.org';
 
@@ -65,6 +65,30 @@ const RouteService = {
     const route = await RouteModel.create({ userId, name, origin, destination, routes });
 
     return route;
+  },
+
+  async deleteRoute(req) {
+    try {
+      const { userId } = req;
+      const { id } = req.params;
+
+      const route = await RouteModel.findById(id);
+
+      if (!route) {
+        throw new NotFoundError(`Route with ${id} id not found`);
+      }
+
+      if (!route.userId.equals(userId)) {
+        throw new ForbiddenError('You can not delete this route');
+      }
+
+      await route.deleteOne();
+
+      return route;
+    } catch (error) {
+      if (error instanceof AppError) throw error;
+      throw new InternalServerError(`${errors.INTERNAL_ERROR}: ${error.message}`, error);
+    }
   },
 };
 

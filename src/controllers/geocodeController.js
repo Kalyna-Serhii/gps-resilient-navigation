@@ -3,9 +3,9 @@ import geocodeService from '../services/geocodeService.js';
 const GeocodeController = {
   async search(req, res, next) {
     try {
-      const results = await geocodeService.search(req);
+      const response = await geocodeService.search(req);
 
-      return res.status(200).json({ results });
+      return res.status(200).json(response);
     } catch (error) {
       next(error);
     }
@@ -13,9 +13,9 @@ const GeocodeController = {
 
   async reverse(req, res, next) {
     try {
-      const result = await geocodeService.reverse(req);
+      const response = await geocodeService.reverse(req);
 
-      return res.status(200).json(result);
+      return res.status(200).json(response);
     } catch (error) {
       next(error);
     }

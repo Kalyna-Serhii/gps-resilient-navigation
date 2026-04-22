@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { errors } from '../utils/appErrors.js';
-import { AppError,BadRequestError, InternalServerError } from '../utils/httpErrors.js';
+import { AppError, BadRequestError, InternalServerError } from '../utils/httpErrors.js';
 
 const NOMINATIM_BASE_URL = 'https://nominatim.openstreetmap.org';
 
@@ -35,10 +35,12 @@ const GeocodeService = {
       }
 
       const { data } = await nominatimClient.get('/search', {
-        params: { q: q.trim(), format: 'json', limit: parsedLimit, addressdetails: 1 },
+        params: { q: q.trim(), format: 'json', limit: parsedLimit, addressdetails: 1, countrycodes: 'ua' },
       });
 
-      return data.map(formatPlace);
+      const results = data.map(formatPlace);
+
+      return { results };
     } catch (error) {
       if (error instanceof AppError) throw error;
       throw new InternalServerError(`${errors.INTERNAL_ERROR}: ${error.message}`, error);

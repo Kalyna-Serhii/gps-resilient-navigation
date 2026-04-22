@@ -3,9 +3,9 @@ import authService from '../services/authService.js';
 const AuthController = {
   async register(req, res, next) {
     try {
-      const newUserData = await authService.register(req);
+      const response = await authService.register(req);
 
-      return res.status(201).json(newUserData);
+      return res.status(201).json(response);
     } catch (error) {
       next(error);
     }
@@ -13,9 +13,9 @@ const AuthController = {
 
   async login(req, res, next) {
     try {
-      const userData = await authService.login(req);
+      const response = await authService.login(req);
 
-      return res.status(200).json(userData);
+      return res.status(200).json(response);
     } catch (error) {
       next(error);
     }
@@ -33,9 +33,9 @@ const AuthController = {
 
   async refresh(req, res, next) {
     try {
-      const tokens = await authService.refresh(req);
+      const response = await authService.refresh(req);
 
-      return res.status(200).send(tokens);
+      return res.status(200).send(response);
     } catch (error) {
       next(error);
     }
