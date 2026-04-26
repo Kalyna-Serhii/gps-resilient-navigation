@@ -257,6 +257,62 @@ const routes = {
       },
     },
   },
+  '/api/routes/{id}/pois': {
+    get: {
+      tags: ['Routes'],
+      summary: 'Get POIs along a saved route (cached after first fetch)',
+      parameters: [
+        { name: 'id', in: 'path', required: true, schema: { type: 'string' }, description: 'Saved route ID' },
+        { name: 'routeIndex', in: 'query', required: false, schema: { type: 'integer', default: 0 }, description: 'Index of the route variant (0 for main, 1+ for alternatives)' },
+      ],
+      responses: {
+        200: {
+          description: 'POIs grouped by route step',
+          content: {
+            'application/json': {
+              schema: {
+                type: 'object',
+                properties: {
+                  routeId: { type: 'string' },
+                  routeIndex: { type: 'integer' },
+                  pois: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        landmarkIndex: { type: 'integer', description: 'Step index in the route' },
+                        instruction: { type: 'string', example: 'turn left' },
+                        streetName: { type: 'string', nullable: true },
+                        location: { type: 'array', items: { type: 'number' }, description: '[lng, lat]' },
+                        nearbyPois: {
+                          type: 'array',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              id: { type: 'integer', description: 'OSM node ID' },
+                              amenity: { type: 'string', example: 'pharmacy' },
+                              name: { type: 'string', nullable: true },
+                              lat: { type: 'number' },
+                              lng: { type: 'number' },
+                              distanceFromLandmark: { type: 'integer', description: 'Distance in meters' },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        400: { description: 'Invalid route index' },
+        401: { description: 'Unauthorized' },
+        404: { description: 'Route not found' },
+        500: { description: 'Internal error' },
+      },
+    },
+  },
 };
 
 export default routes;

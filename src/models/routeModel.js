@@ -12,6 +12,7 @@ const routeSchema = new mongoose.Schema(
     origin: coordinateSchema,
     destination: coordinateSchema,
     routes: { type: mongoose.Schema.Types.Mixed, required: true },
+    pois: { type: mongoose.Schema.Types.Mixed },
   },
   { timestamps: true },
 );
