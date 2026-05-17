@@ -52,6 +52,7 @@ function overpassPost(query) {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': Buffer.byteLength(body),
+          'User-Agent': 'gps-resilient-navigation/1.0',
         },
       },
       res => {
